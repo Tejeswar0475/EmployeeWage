@@ -4,7 +4,8 @@ attendance=$((RANDOM%2))
 present=1
 absent=0
 wagePerHour=20
-fullDayHour=8
+fullTimeHour=8
+partTimeHour=4
 
 if (( $attendance == $present ))
 then
@@ -13,5 +14,5 @@ else
 	echo "Employee is absent-$attendance"
 fi
 
-dailyEmpWage=$(( $wagePerHour * $fullDayHour ))
-
+dailyFullTimeEmpWage=$(( $wagePerHour * $fullTimeHour ))
+dailyPartTimeEmpWage=$(( $wagePerHour * $partTimeHour ))
