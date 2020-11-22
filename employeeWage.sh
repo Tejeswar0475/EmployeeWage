@@ -46,13 +46,13 @@ do
 	attendance=$((RANDOM%3))
 	if (( $attendance == $presentForPartTime ))
 	then
-		echo "Employee is present-$attendance, for part time"
+		((fullWork++))
 
 	elif (( $attendance == $presentForFullTime ))
 	then
-		echo "Employee is present-$attendance, for full time"
+		((halfWork++))
 	else
-		echo "Employee is absent-$attendance"
+		((absent++))
 	fi
 
 
@@ -60,8 +60,28 @@ do
 	totalEmpHours=$(( $totalEmpHours + $empWorkingHours ))
 	empDailyWage[$empWorkingDays]="$( dailyEmpWage $empWorkingHours )"
 	empTotalWage[$empWorkingDays]="$( totalWage $totalEmpHours )"
+	day[$count]=$count
 
+	if [[ $count == 20 ]]
+	then
+		break
+	fi
+((i++))
 
 done
-echo ${empDailyWage[@]}
-echo ${empTotalWage[@]}
+
+totalWage=$(( $wagePerHour * $totalEmpHours ))
+totalDay=$(( $fullWork + $halfWork + $absent ))
+i=1
+echo "Days    DailyWage   TotalWage"
+while (( $empWorkingDays <= $totalDay ))
+do
+
+	echo "day[$i]	${empDailyWage[$i]}	${empTotalWage[$i]}"
+
+	if [[ $i == 20 ]]
+	then
+		exit 0
+	fi
+((i++))
+done
