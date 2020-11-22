@@ -19,6 +19,18 @@ function dailyEmpWage()
 	echo $dailyEmpWage
 }
 
+function empWorkingHours()
+{
+	case $attendance in
+
+		1)empWorkHour=4 ;;
+		2)empWorkHour=8 ;;
+			*)empWorkHour=0
+
+	esac
+	echo $empWorkHour
+}
+
 while (( $empWorkingDays < $maxWorkingDays && $empWorkingHours < $maxWorkingHours ))
 do
 	((empWorkingDays++))
@@ -31,21 +43,14 @@ do
 
 	elif (( $attendance == $presentForFullTime ))
 	then
-		echo "Employee is absent-$attendance, for full time"
+		echo "Employee is present-$attendance, for full time"
 	else
 		echo "Employee is absent-$attendance"
 	fi
 
-	case $attendance in
-
-		1)empWorkHour=4 ;;
-		2)empWorkHour=8 ;;
-			*)empWorkHour=0
-
-	esac
 
 	empDailyWage="$( dailyEmpWage $attendance )"
-
+	empWorkingHour="$( empWorkingHours $attendance )"
 
 
 done
