@@ -8,24 +8,22 @@ wagePerHour=20
 fullTimeHour=8
 partTimeHour=4
 empWorkingDays=0
+empWorkingHours=0
 maxWorkingDays=20
-
-
+maxWorkingHours=100
 
 function dailyEmpWage()
 {
-
 	empWorkHours=$1
 	dailyEmpWage=$(( $empWorkHours * $wagePerHour ))
 	echo $dailyEmpWage
-
 }
 
-
-
-
-while (( $empWorkingDays <= $maxWorkingDays ))
+while (( $empWorkingDays < $maxWorkingDays && $empWorkingHours < $maxWorkingHours ))
 do
+	((empWorkingDays++))
+	((empworkingHours++))
+
 	attendance=$((RANDOM%3))
 	if (( $attendance == $presentForPartTime ))
 	then
@@ -46,12 +44,8 @@ do
 
 	esac
 
-	dailyEmpWage $attendance
+	empDailyWage="$( dailyEmpWage $attendance )"
 
-((empWorkingDays++))
+
+
 done
-
-
-
-
-
