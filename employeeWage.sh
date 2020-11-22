@@ -31,6 +31,13 @@ function empWorkingHours()
 	echo $empWorkHour
 }
 
+function totalWage()
+{
+	empWage=$1
+	totalEmpWage=$(( $empWage * $wagePerHour ))
+	echo $totalEmpWage
+}
+
 while (( $empWorkingDays < $maxWorkingDays && $empWorkingHours < $maxWorkingHours ))
 do
 	((empWorkingDays++))
@@ -49,8 +56,12 @@ do
 	fi
 
 
-	empDailyWage="$( dailyEmpWage $attendance )"
-	empWorkingHour="$( empWorkingHours $attendance )"
+	empWorkingHours="$( empWorkingHours $attendance )"
+	totalEmpHours=$(( $totalEmpHours + $empWorkingHours ))
+	empDailyWage[$empWorkingDays]="$( dailyEmpWage $empWorkingHours )"
+	empTotalWage[$empWorkingDays]="$( totalWage $totalEmpHours )"
 
 
 done
+echo ${empDailyWage[@]}
+echo ${empTotalWage[@]}
